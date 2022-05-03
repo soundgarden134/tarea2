@@ -6,6 +6,7 @@ import my_utility as ut
 import copy
 #-----------------------------------------------------------------------
 # STEP: Feed-Backward
+
 def grad_dae(a,w):
     gradW = [None]*len(w)
     deltas = [None]*len(w)
@@ -37,7 +38,7 @@ def grad_dae(a,w):
     return(gradW)  
 # Update DAE's Weight 
 def updW_dae(w,gradW,mu):
-    w = copy.deepcopy(w)
+    # w = copy.deepcopy(w)
     for i in range(len(w)):
         tau = mu/len(w)
         mu_k = mu/(1+np.dot(tau,(i+1)))

@@ -10,15 +10,15 @@ import copy
 # Softmax's training
 def train_softmax(x,y,param):
     w=ut.randW(y.shape[0],x.shape[0])
-    costo=[]
+    cost_array=[]
     for iter in range(param[0]):
         gradW, cost = opt.grad_sftm(x, y, w)
-        costo.append(cost)
+        cost_array.append(cost)
         w = w - (param[1]*gradW)
         if iter % 500 == 0:
             print("Costo iteracion "+ str(iter) + " softmax:" + str(cost))
     print("Costo final softmax: "+str(cost))
-    return(w,costo)
+    return(w,cost_array)
 
 
 
@@ -29,7 +29,7 @@ def get_miniBatch(i,x,bsize): #toma un x y retorna un array de bsize y el numero
 
 # Deep AE's Training 
 def train_dae(x,W,numBatch,BatchSize,mu):
-    for i in range(1):       
+    for i in range(numBatch):       
         x_batch = ut.dat_miniBatch(i, x, BatchSize)      
         a  = ut.forward_dae(x_batch,W)              
         gW = opt.grad_dae(a, W)
@@ -43,7 +43,7 @@ def train_dl(x,param): ##ENTENDER
     learningRate = param[2]
     W        = ut.iniW(x.shape[0],param[3:])
     numBatch = np.int16(np.floor(x.shape[1]/miniBatchSize))
-    tau      = learningRate/numIter    #?
+    tau      = learningRate/numIter    
     for i in range(numIter):        
         xe  = x[:,np.random.permutation(x.shape[1])]
         mu  = param[2]/(1+tau*i)     

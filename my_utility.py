@@ -20,7 +20,6 @@ def randW(next,prev):
     r  = np.sqrt(6/(next+ prev))
     w  = np.random.rand(next,prev)
     w  = w*2*r-r
-    w = np.array(w, dtype=np.float64)
     return(w)
 
 
@@ -61,18 +60,18 @@ def encoder(x,w):
 
 #Activation function
 def act_func(z):  #provisiona
-    # return(1/(1+np.exp(-z)))   
+    return(1/(1+np.exp(-z)))   
 
-    return (np.maximum(0,z))
+    # return (np.maximum(0,z))
     
  
 # Derivate of the activation funciton
 def deriva_func(a): #prov
-    x = a.copy()
-    x[a<=0] = 0
-    x[a>0] = 1
-    return x
-    # return(a*(1-a))
+    # x = a.copy()
+    # x[a<=0] = 0
+    # x[a>0] = 1
+    # return x
+    return(a*(1-a))
 
 
 #Forward Softmax
