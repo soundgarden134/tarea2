@@ -38,7 +38,6 @@ def grad_dae(a,w):
     return(gradW)  
 # Update DAE's Weight 
 def updW_dae(w,gradW,mu):
-    # w = copy.deepcopy(w)
     for i in range(len(w)):
         tau = mu/len(w)
         mu_k = mu/(1+np.dot(tau,(i+1)))
@@ -56,8 +55,14 @@ def grad_sftm(x,y,w):
   
 
 # Update Softmax's Weight 
-def updW_sftm(w,v,gW,mu):        
-    ...    
-    return()
+def updW_sftm(w,v,gW,mu): 
+    beta = 0.9
+    epsilon = 1e-7
+    v = v*beta + (1-beta)*gW**2
+    gRMS = (mu/(np.sqrt(v) + epsilon))*gW
+    w = w - gRMS
+       
+    
+    return(w, v)
 #
 

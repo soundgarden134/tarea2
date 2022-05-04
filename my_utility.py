@@ -59,14 +59,14 @@ def encoder(x,w):
 
 
 #Activation function
-def act_func(z):  #provisiona
+def act_func(z):  #provisional
     return(1/(1+np.exp(-z)))   
 
     # return (np.maximum(0,z))
     
  
 # Derivate of the activation funciton
-def deriva_func(a): #prov
+def deriva_func(a): #provisional
     # x = a.copy()
     # x[a<=0] = 0
     # x[a>0] = 1

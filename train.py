@@ -11,10 +11,12 @@ import copy
 def train_softmax(x,y,param):
     w=ut.randW(y.shape[0],x.shape[0])
     cost_array=[]
+    mu = param[1] #learning Rate
+    v = 0
     for iter in range(param[0]):
         gradW, cost = opt.grad_sftm(x, y, w)
         cost_array.append(cost)
-        w = w - (param[1]*gradW)
+        w,v = opt.updW_sftm(w, v, gradW, mu)
         if iter % 500 == 0:
             print("Costo iteracion "+ str(iter) + " softmax:" + str(cost))
     print("Costo final softmax: "+str(cost))
@@ -37,13 +39,13 @@ def train_dae(x,W,numBatch,BatchSize,mu):
     return(W)
 
 #Deep Learning: Training 
-def train_dl(x,param): ##ENTENDER
+def train_dl(x,param): 
     numIter = param[0]
     miniBatchSize = param[1]
     learningRate = param[2]
     W        = ut.iniW(x.shape[0],param[3:])
     numBatch = np.int16(np.floor(x.shape[1]/miniBatchSize))
-    tau      = learningRate/numIter    
+    tau      = learningRate/numIter  
     for i in range(numIter):        
         xe  = x[:,np.random.permutation(x.shape[1])]
         mu  = param[2]/(1+tau*i)     
