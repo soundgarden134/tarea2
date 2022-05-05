@@ -20,6 +20,7 @@ def main():
     zv = forward_dl(xv,W)
     cm,Fsc = ut.metricas(yv,zv) 		
     print('Fsc-mean {:.5f}'.format(Fsc.mean()))
+    print(cm)
 	
 
 if __name__ == '__main__':   

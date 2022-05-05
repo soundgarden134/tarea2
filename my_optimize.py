@@ -37,14 +37,19 @@ def grad_dae(a,w):
     
 
     return(gradW)  
+
+def grad_dae2(a,w):
+    E = 1
+    gradW = []
+    
+
+    return(gradW)  
+
 # Update DAE's Weight 
 def updW_dae2(w,gradW,mu, beta, v):
     for i in range(len(w)):
-        print(w[i].shape)
-        print(gradW[i].shape)
-        print(i)
-        w[i] = w[i] + beta*v - mu*gradW[i]
-        v = beta*v - (1-beta)*1 #pendiente
+        w[i] = w[i] + beta*v[i] - mu*gradW[i]
+        v[i] = beta*v[i] - mu*gradW[i]
     return(w, v)
 
 def updW_dae(w,gradW,mu):
