@@ -34,9 +34,19 @@ def grad_dae(a,w):
             
             gradW[-1] = grad
             deltas[-1] = delta_f
-            
+    
+
     return(gradW)  
 # Update DAE's Weight 
+def updW_dae2(w,gradW,mu, beta, v):
+    for i in range(len(w)):
+        print(w[i].shape)
+        print(gradW[i].shape)
+        print(i)
+        w[i] = w[i] + beta*v - mu*gradW[i]
+        v = beta*v - (1-beta)*1 #pendiente
+    return(w, v)
+
 def updW_dae(w,gradW,mu):
     for i in range(len(w)):
         tau = mu/len(w)
@@ -48,6 +58,9 @@ def updW_dae(w,gradW,mu):
 def grad_sftm(x,y,w):
     z = np.dot(w,x)
     a = ut.softmax(z)
+    z = np.array(z, dtype=np.float64)
+    a = np.array(a, dtype = np.float64)
+    
     ya = y*np.log(a)
     cost = (-1/x.shape[1])*np.sum(np.sum(ya))
     gW = ((-1/x.shape[1])*np.dot((y-a),x.T))
@@ -57,7 +70,7 @@ def grad_sftm(x,y,w):
 # Update Softmax's Weight 
 def updW_sftm(w,v,gW,mu): 
     beta = 0.9
-    epsilon = 1e-7
+    epsilon = 1e-8
     v = v*beta + (1-beta)*gW**2
     gRMS = (mu/(np.sqrt(v) + epsilon))*gW
     w = w - gRMS

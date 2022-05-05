@@ -45,8 +45,9 @@ def save_w_dl(W,Ws,csv_W,cost,csv_cost):
     return ()
     
 #load weight of the DL in numpy format
-def load_w_dl():
-    ...
-    return(W)    
+def load_w_dl(npy_w):
+    w = np.load(npy_w, allow_pickle=True)
+    return w['W']
+  
 #-----------------------------------------------------------------------
 

@@ -80,8 +80,26 @@ def softmax(z):
         return(exp_z/exp_z.sum(axis=0,keepdims=True))
 # Métrica
 def metricas(x,y):
-    ...
-    return()    
+    confusion_matrix = np.zeros((y.shape[0], x.shape[0]))
+    
+    for real, predicted in zip(y.T, x.T):
+        confusion_matrix[np.argmax(real)][np.argmax(predicted)] += 1
+        
+    f_score = []
+    
+    for index, caracteristica in enumerate(confusion_matrix):
+        
+        TP = caracteristica[index]
+        FP = confusion_matrix.sum(axis=0)[index] - TP
+        FN = confusion_matrix.sum(axis=1)[index] - TP
+        recall = TP / (TP + FN)
+        precision = TP / (TP + FP)
+        f_score.append(2 * (precision * recall) / (precision + recall))
+        
+    metrics = pd.DataFrame(f_score)
+    metrics.to_csv("metrica_dl.csv", index=False, header=False)
+    f_score = np.array(f_score)
+    return(confusion_matrix, f_score) 
 #Confusuon matrix
 def confusion_matrix(x,y):
     ...
