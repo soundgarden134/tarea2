@@ -60,18 +60,15 @@ def encoder(x,w):
 
 #Activation function
 def act_func(z):  #provisional
-    return(1/(1+np.exp(-z)))   
 
-    # return (np.maximum(0,z))
+
+    return np.maximum(0,z)
     
  
 # Derivate of the activation funciton
 def deriva_func(a): #provisional
-    # x = a.copy()
-    # x[a<=0] = 0
-    # x[a>0] = 1
-    # return x
-    return(a*(1-a))
+    return (a>0).astype(float)
+
 
 
 #Forward Softmax

@@ -38,12 +38,6 @@ def grad_dae(a,w):
 
     return(gradW)  
 
-def grad_dae2(a,w):
-    E = 1
-    gradW = []
-    
-
-    return(gradW)  
 
 # Update DAE's Weight 
 def updW_dae(w,v,gW,mu,beta):
@@ -62,8 +56,9 @@ def updW_dae(w,v,gW,mu,beta):
         gRMS_a = (u/(np.sqrt(v[i] + eps)))
         gRMS = gRMS_a*gW[i]
         w[i] = w[i] - gRMS
-        # v[i] = b*v[i] - mu*gW[i]
+        
         # w[i] = v[i] + w[i]
+        # v[i] = beta*v[i] - mu*gW[i]
     
     return(w,v)
 
