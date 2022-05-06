@@ -46,18 +46,26 @@ def grad_dae2(a,w):
     return(gradW)  
 
 # Update DAE's Weight 
-def updW_dae2(w,gradW,mu, beta, v):
-    for i in range(len(w)):
-        w[i] = w[i] + beta*v[i] - mu*gradW[i]
-        v[i] = beta*v[i] - mu*gradW[i]
-    return(w, v)
+def updW_dae(w,v,gW,mu,beta):
+    #w:pesos 
+    #v:matrizSimilarA W,fill of de zeros 
+    #gW:gradienteDepesos 
+    #mu(learn rate): 0.001
 
-def updW_dae(w,gradW,mu):
+    #Parametros
+    u = 10**-3
+    eps = 10**-10
+    b = 0.9
+
     for i in range(len(w)):
-        tau = mu/len(w)
-        mu_k = mu/(1+np.dot(tau,(i+1)))
-        w[i] = w[i] - mu_k*gradW[i]
-    return(w)
+        v[i] = b*v[i] + (1-b)*(gW[i])**2
+        gRMS_a = (u/(np.sqrt(v[i] + eps)))
+        gRMS = gRMS_a*gW[i]
+        w[i] = w[i] - gRMS
+        # v[i] = b*v[i] - mu*gW[i]
+        # w[i] = v[i] + w[i]
+    
+    return(w,v)
 
 # Softmax's gradient
 def grad_sftm(x,y,w):
@@ -74,10 +82,12 @@ def grad_sftm(x,y,w):
 
 # Update Softmax's Weight 
 def updW_sftm(w,v,gW,mu): 
-    beta = 0.9
-    epsilon = 1e-8
-    v = v*beta + (1-beta)*gW**2
-    gRMS = (mu/(np.sqrt(v) + epsilon))*gW
+    u = 10**-3
+    eps = 10**-10
+    b = 0.9
+    v = b*v + (1-b)*(gW)**2
+    gRMS_a = (u/(np.sqrt(v + eps)))
+    gRMS = gRMS_a*gW
     w = w - gRMS
        
     
