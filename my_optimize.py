@@ -40,25 +40,19 @@ def grad_dae(a,w):
 
 
 # Update DAE's Weight 
-def updW_dae(w,v,gW,mu,beta):
-    #w:pesos 
-    #v:matrizSimilarA W,fill of de zeros 
-    #gW:gradienteDepesos 
-    #mu(learn rate): 0.001
-
+def updW_dae(w,v,gW,beta):
     #Parametros
-    u = 10**-3
+    u = 10**-5
     eps = 10**-10
     b = 0.9
 
     for i in range(len(w)):
-        v[i] = b*v[i] + (1-b)*(gW[i])**2
-        gRMS_a = (u/(np.sqrt(v[i] + eps)))
-        gRMS = gRMS_a*gW[i]
-        w[i] = w[i] - gRMS
-        
-        # w[i] = v[i] + w[i]
-        # v[i] = beta*v[i] - mu*gW[i]
+        # v[i] = b*v[i] + (1-b)*(gW[i])**2
+        # gRMS_a = (u/(np.sqrt(v[i] + eps)))
+        # gRMS = gRMS_a*gW[i]
+        # w[i] = w[i] - gRMS
+        w[i] = v[i] + w[i]
+        v[i] = beta*v[i] - u*gW[i]
     
     return(w,v)
 

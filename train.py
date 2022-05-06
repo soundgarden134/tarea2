@@ -57,7 +57,7 @@ def train_dae(x,W,V,mu,numBatch,BatchSize):
         xe   = get_miniBatch(i,x,BatchSize)
         a  = ut.forward_dae(xe,W)
         gW = opt.grad_dae(a, W)
-        W,V  = opt.updW_dae(W,V,gW,mu,beta)
+        W,V  = opt.updW_dae(W,V,gW,beta)
     return(W)
 
 
