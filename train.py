@@ -37,6 +37,17 @@ def initializeV(W): #inicializa matriz de dimension W
         v[i] = np.zeros((dim1,dim2))
     return v
 
+
+def decoder_weights(W):
+    cop = copy.deepcopy(W)
+    half = int(len(cop)/2)
+    aux = cop[half:]
+    aux.reverse()
+    for i in range(len(aux)):
+        aux[i] = aux[i].T
+    return aux
+    
+    
 # Deep AE's Training        
 def train_dae(x,W,V,mu,numBatch,BatchSize):
     b = 0.9
@@ -61,11 +72,12 @@ def train_dl(x,param):
     V = initializeV(W)
     for i in range(numIter):      
         xe  = x[:,np.random.permutation(x.shape[1])] 
-        W   = train_dae(xe,W,V,learningRate,numBatch,BatchSize)            
-    return(W) 
-   
+        W = train_dae(xe,W,V,learningRate,numBatch,BatchSize)   
+    aux = decoder_weights(W)         
+    return(aux) 
 
-   
+
+
 # Beginning ...
 def main():
     p_dae,p_sftm = cnf.config_dl() 

@@ -60,8 +60,6 @@ def encoder(x,w):
 
 #Activation function
 def act_func(z):  #provisional
-
-
     return np.maximum(0,z)
     
  
