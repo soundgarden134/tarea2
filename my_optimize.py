@@ -40,7 +40,7 @@ def grad_dae(a,w):
 
 
 # Update DAE's Weight 
-def updW_dae(w,v,gW,beta):
+def updW_dae(w,v,gW,mu,beta):
     #Parametros
     u = 10**-5
     eps = 10**-10
